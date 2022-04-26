@@ -772,6 +772,7 @@ exports.Network = void 0;
     Network[Network["KOVAN"] = 42] = "KOVAN";
     Network[Network["POLYGON"] = 137] = "POLYGON";
     Network[Network["ARBITRUM"] = 42161] = "ARBITRUM";
+    Network[Network["AVALANCHE"] = 43114] = "AVALANCHE";
 })(exports.Network || (exports.Network = {}));
 
 /*
@@ -891,6 +892,30 @@ const BALANCER_NETWORK_CONFIG = {
             staBal3Pool: {
                 id: '0x7b50775383d3d6f0215a8f290f2c9e2eebbeceb20000000000000000000000fe',
                 address: '0x7b50775383d3d6f0215a8f290f2c9e2eebbeceb2',
+            },
+        },
+    },
+    [exports.Network.AVALANCHE]: {
+        chainId: exports.Network.AVALANCHE,
+        addresses: {
+            contracts: {
+                vault: '0xb8f34FA65beF9c361eb52d95a930fa3548B3FbA3',
+                multicall: '0x5f031af1264ebcdf5abee25c39793ff992fc2629',
+            },
+            tokens: {
+                wrappedNativeAsset: '0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7',
+            },
+            linearFactories: {
+                '0xd7fad3bd59d6477cbe1be7f646f7f1ba25b230f8': 'aave',
+            },
+        },
+        urls: {
+            subgraph: 'https://api.thegraph.com/subgraphs/name/dev-soul/testson',
+        },
+        pools: {
+            staBal3Pool: {
+                id: '0x3c55a74ade0ed1cd64a83a69ca5ff27aa521f60b000200000000000000000002',
+                address: '0x3c55a74ADe0eD1cd64A83A69cA5fF27Aa521f60b',
             },
         },
     },
@@ -7061,7 +7086,7 @@ const NETWORKS_WITH_LINEAR_POOLS = [
     exports.Network.RINKEBY,
     exports.Network.GÖRLI,
     exports.Network.KOVAN,
-    43114,
+    exports.Network.AVALANCHE,
 ];
 class SubgraphPoolDataService {
     constructor(client, provider, network, sorConfig) {
