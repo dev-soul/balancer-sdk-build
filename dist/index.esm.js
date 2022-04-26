@@ -898,19 +898,11 @@ const BALANCER_NETWORK_CONFIG = {
             tokens: {
                 wrappedNativeAsset: '0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7',
             },
-            linearFactories: {
-                '0xd7fad3bd59d6477cbe1be7f646f7f1ba25b230f8': 'aave',
-            },
         },
         urls: {
             subgraph: 'https://api.thegraph.com/subgraphs/name/dev-soul/testson',
         },
-        pools: {
-            staBal3Pool: {
-                id: '0x3c55a74ade0ed1cd64a83a69ca5ff27aa521f60b000200000000000000000002',
-                address: '0x3c55a74ADe0eD1cd64A83A69cA5fF27Aa521f60b',
-            },
-        },
+        pools: {},
     },
     [Network.POLYGON]: {
         chainId: Network.POLYGON,
