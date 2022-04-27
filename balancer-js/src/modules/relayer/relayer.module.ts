@@ -31,7 +31,7 @@ import { SubgraphPoolBase } from '@balancer-labs/sor';
 import { flatten, keyBy } from 'lodash';
 import { WeightedPoolEncoder } from '@/pool-weighted/encoder';
 import { BooMirrorWorldStakingService } from '@/modules/relayer/extensions/boo-mirror-world-staking.service';
-import { FBeetsBarStakingService } from '@/modules/relayer/extensions/fbeets-bar-staking.service';
+import { XSonarBarStakingService } from '@/modules/relayer/extensions/xsonar-bar-staking.service';
 import { MasterChefStakingService } from '@/modules/relayer/extensions/masterchef-staking.service';
 import { YearnWrappingService } from '@/modules/relayer/extensions/yearn-wrapping.service';
 import { AaveWrappingService } from '@/modules/relayer/extensions/aave-wrapping.service';
@@ -44,7 +44,7 @@ export class Relayer {
     private vaultActionsService: VaultActionsService;
     private aaveWrappingService: AaveWrappingService;
     private booMirrorWorldStaking: BooMirrorWorldStakingService;
-    private fBeetsBarStakingService: FBeetsBarStakingService;
+    private xSonarBarStakingService: XSonarBarStakingService;
     private masterChefStakingService: MasterChefStakingService;
     private yearnWrappingService: YearnWrappingService;
     private batchRelayerAddress: string;
@@ -56,7 +56,7 @@ export class Relayer {
         this.vaultActionsService = new VaultActionsService();
         this.aaveWrappingService = new AaveWrappingService();
         this.booMirrorWorldStaking = new BooMirrorWorldStakingService();
-        this.fBeetsBarStakingService = new FBeetsBarStakingService();
+        this.xSonarBarStakingService = new XSonarBarStakingService();
         this.masterChefStakingService = new MasterChefStakingService();
         this.yearnWrappingService = new YearnWrappingService();
         this.batchRelayerAddress =
@@ -340,7 +340,7 @@ export class Relayer {
         slippage,
         funds,
         farmId,
-        mintFBeets,
+        mintXSonar,
     }: BatchRelayerJoinPool): Promise<TransactionData> {
         const stakeBptInFarm = typeof farmId === 'number';
         const wrappedNativeAsset =
@@ -479,7 +479,7 @@ export class Relayer {
                 poolKind: 0,
                 sender: funds.sender,
                 recipient:
-                    stakeBptInFarm || mintFBeets
+                    stakeBptInFarm || mintXSonar
                         ? this.batchRelayerAddress
                         : funds.recipient,
                 joinPoolRequest: {
@@ -506,9 +506,9 @@ export class Relayer {
             calls.push(encodedJoinPool);
         }
 
-        if (mintFBeets) {
+        if (mintXSonar) {
             calls.push(
-                this.fBeetsBarStakingService.encodeEnter({
+                this.xSonarBarStakingService.encodeEnter({
                     sender: this.batchRelayerAddress,
                     recipient: stakeBptInFarm
                         ? this.batchRelayerAddress
@@ -525,12 +525,12 @@ export class Relayer {
                     sender: this.batchRelayerAddress,
                     recipient: funds.recipient,
                     token:
-                        mintFBeets && this.config.fBeets
-                            ? this.config.fBeets.address
+                        mintXSonar && this.config.xSonar
+                            ? this.config.xSonar.address
                             : pool.address,
                     pid:
-                        mintFBeets && this.config.fBeets
-                            ? this.config.fBeets.farmId
+                        mintXSonar && this.config.xSonar
+                            ? this.config.xSonar.farmId
                             : farmId,
                     amount: Relayer.toChainedReference(0),
                     outputReference: Zero,

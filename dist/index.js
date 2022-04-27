@@ -7471,7 +7471,7 @@ class BooMirrorWorldStakingService {
     }
 }
 
-var fBeetsBarStakingAbi = [
+var xSonarBarStakingAbi = [
 	{
 		inputs: [
 			{
@@ -7514,7 +7514,7 @@ var fBeetsBarStakingAbi = [
 				type: "uint256"
 			}
 		],
-		name: "fBeetsBarEnter",
+		name: "xSonarBarEnter",
 		outputs: [
 		],
 		stateMutability: "payable",
@@ -7543,7 +7543,7 @@ var fBeetsBarStakingAbi = [
 				type: "uint256"
 			}
 		],
-		name: "fBeetsBarLeave",
+		name: "xSonarBarLeave",
 		outputs: [
 		],
 		stateMutability: "payable",
@@ -7565,10 +7565,10 @@ var fBeetsBarStakingAbi = [
 	}
 ];
 
-class FBeetsBarStakingService {
+class XSonarBarStakingService {
     encodeEnter(params) {
-        const fBeetsBarStakingLibrary = new abi.Interface(fBeetsBarStakingAbi);
-        return fBeetsBarStakingLibrary.encodeFunctionData('fBeetsBarEnter', [
+        const xSonarBarStakingLibrary = new abi.Interface(xSonarBarStakingAbi);
+        return xSonarBarStakingLibrary.encodeFunctionData('xSonarBarEnter', [
             params.sender,
             params.recipient,
             params.amount,
@@ -7576,8 +7576,8 @@ class FBeetsBarStakingService {
         ]);
     }
     encodeLeave(params) {
-        const fBeetsBarStakingLibrary = new abi.Interface(fBeetsBarStakingAbi);
-        return fBeetsBarStakingLibrary.encodeFunctionData('fBeetsBarLeave', [
+        const xSonarBarStakingLibrary = new abi.Interface(xSonarBarStakingAbi);
+        return xSonarBarStakingLibrary.encodeFunctionData('xSonarBarLeave', [
             params.sender,
             params.recipient,
             params.amount,
@@ -7692,8 +7692,8 @@ var masterChefStakingAbi = [
 
 class MasterChefStakingService {
     encodeDeposit(params) {
-        const fBeetsBarStakingLibrary = new abi.Interface(masterChefStakingAbi);
-        return fBeetsBarStakingLibrary.encodeFunctionData('masterChefDeposit', [
+        const xSonarBarStakingLibrary = new abi.Interface(masterChefStakingAbi);
+        return xSonarBarStakingLibrary.encodeFunctionData('masterChefDeposit', [
             params.sender,
             params.recipient,
             params.token,
@@ -7703,8 +7703,8 @@ class MasterChefStakingService {
         ]);
     }
     encodeWithdraw(params) {
-        const fBeetsBarStakingLibrary = new abi.Interface(masterChefStakingAbi);
-        return fBeetsBarStakingLibrary.encodeFunctionData('masterChefWithdraw', [
+        const xSonarBarStakingLibrary = new abi.Interface(masterChefStakingAbi);
+        return xSonarBarStakingLibrary.encodeFunctionData('masterChefWithdraw', [
             params.recipient,
             params.pid,
             params.amount,
@@ -8466,7 +8466,7 @@ class Relayer {
         this.vaultActionsService = new VaultActionsService();
         this.aaveWrappingService = new AaveWrappingService();
         this.booMirrorWorldStaking = new BooMirrorWorldStakingService();
-        this.fBeetsBarStakingService = new FBeetsBarStakingService();
+        this.xSonarBarStakingService = new XSonarBarStakingService();
         this.masterChefStakingService = new MasterChefStakingService();
         this.yearnWrappingService = new YearnWrappingService();
         this.batchRelayerAddress =
@@ -8661,7 +8661,7 @@ class Relayer {
             },
         };
     }
-    async joinPool({ poolId, tokens, bptOut, fetchPools, slippage, funds, farmId, mintFBeets, }) {
+    async joinPool({ poolId, tokens, bptOut, fetchPools, slippage, funds, farmId, mintXSonar, }) {
         const stakeBptInFarm = typeof farmId === 'number';
         const wrappedNativeAsset = this.config.addresses.tokens.wrappedNativeAsset.toLowerCase();
         const pool = this.getRequiredPool(poolId);
@@ -8750,7 +8750,7 @@ class Relayer {
                 poolId: pool.id,
                 poolKind: 0,
                 sender: funds.sender,
-                recipient: stakeBptInFarm || mintFBeets
+                recipient: stakeBptInFarm || mintXSonar
                     ? this.batchRelayerAddress
                     : funds.recipient,
                 joinPoolRequest: {
@@ -8770,8 +8770,8 @@ class Relayer {
             });
             calls.push(encodedJoinPool);
         }
-        if (mintFBeets) {
-            calls.push(this.fBeetsBarStakingService.encodeEnter({
+        if (mintXSonar) {
+            calls.push(this.xSonarBarStakingService.encodeEnter({
                 sender: this.batchRelayerAddress,
                 recipient: stakeBptInFarm
                     ? this.batchRelayerAddress
@@ -8784,11 +8784,11 @@ class Relayer {
             calls.push(this.masterChefStakingService.encodeDeposit({
                 sender: this.batchRelayerAddress,
                 recipient: funds.recipient,
-                token: mintFBeets && this.config.fBeets
-                    ? this.config.fBeets.address
+                token: mintXSonar && this.config.xSonar
+                    ? this.config.xSonar.address
                     : pool.address,
-                pid: mintFBeets && this.config.fBeets
-                    ? this.config.fBeets.farmId
+                pid: mintXSonar && this.config.xSonar
+                    ? this.config.xSonar.farmId
                     : farmId,
                 amount: Relayer.toChainedReference(0),
                 outputReference: constants.Zero,

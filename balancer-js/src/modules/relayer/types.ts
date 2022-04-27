@@ -108,7 +108,7 @@ export interface BatchRelayerJoinPool {
     funds: FundManagement;
     fetchPools: FetchPoolsInput;
     farmId?: number;
-    mintFBeets?: boolean;
+    mintXSonar?: boolean;
 }
 
 export interface EncodeBooMirrorWorldEnterInput {
@@ -125,14 +125,14 @@ export interface EncodeBooMirrorWorldLeaveInput {
     outputReference: BigNumberish;
 }
 
-export interface EncodeFBeetsBarEnterInput {
+export interface EncodeXSonarBarEnterInput {
     sender: string;
     recipient: string;
     amount: BigNumberish;
     outputReference: BigNumberish;
 }
 
-export interface EncodeFBeetsBarLeaveInput {
+export interface EncodeXSonarBarLeaveInput {
     sender: string;
     recipient: string;
     amount: BigNumberish;

@@ -49,7 +49,7 @@ export interface BalancerNetworkConfig {
         staBal3Pool?: PoolReference;
         wethStaBal3?: PoolReference;
     };
-    fBeets?: {
+    xSonar?: {
         address: string;
         farmId: number;
         poolId: string;

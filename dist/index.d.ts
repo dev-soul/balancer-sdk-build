@@ -193,7 +193,7 @@ interface BalancerNetworkConfig {
         staBal3Pool?: PoolReference;
         wethStaBal3?: PoolReference;
     };
-    fBeets?: {
+    xSonar?: {
         address: string;
         farmId: number;
         poolId: string;
@@ -590,7 +590,7 @@ interface BatchRelayerJoinPool {
     funds: FundManagement;
     fetchPools: FetchPoolsInput;
     farmId?: number;
-    mintFBeets?: boolean;
+    mintXSonar?: boolean;
 }
 interface EncodeBooMirrorWorldEnterInput {
     sender: string;
@@ -604,13 +604,13 @@ interface EncodeBooMirrorWorldLeaveInput {
     amount: BigNumberish;
     outputReference: BigNumberish;
 }
-interface EncodeFBeetsBarEnterInput {
+interface EncodeXSonarBarEnterInput {
     sender: string;
     recipient: string;
     amount: BigNumberish;
     outputReference: BigNumberish;
 }
-interface EncodeFBeetsBarLeaveInput {
+interface EncodeXSonarBarLeaveInput {
     sender: string;
     recipient: string;
     amount: BigNumberish;
@@ -638,7 +638,7 @@ declare class Relayer {
     private vaultActionsService;
     private aaveWrappingService;
     private booMirrorWorldStaking;
-    private fBeetsBarStakingService;
+    private xSonarBarStakingService;
     private masterChefStakingService;
     private yearnWrappingService;
     private batchRelayerAddress;
@@ -673,7 +673,7 @@ declare class Relayer {
      * @returns Transaction data with calldata. Outputs.amountsOut has amounts of batchSwapTokensOut returned.
      */
     exitPoolAndBatchSwap(params: ExitAndBatchSwapInput): Promise<TransactionData>;
-    joinPool({ poolId, tokens, bptOut, fetchPools, slippage, funds, farmId, mintFBeets, }: BatchRelayerJoinPool): Promise<TransactionData>;
+    joinPool({ poolId, tokens, bptOut, fetchPools, slippage, funds, farmId, mintXSonar, }: BatchRelayerJoinPool): Promise<TransactionData>;
     private getNestedLinearPools;
     private getRequiredPool;
     private getRequiredLinearPoolForWrappedToken;
@@ -1993,4 +1993,4 @@ declare class BalancerSDK {
     get networkConfig(): BalancerNetworkConfig;
 }
 
-export { AaveHelpers, Account, AssetHelpers, BalancerErrors, BalancerLinearPoolType, BalancerNetworkConfig, BalancerSDK, BalancerSdkConfig, BalancerSdkSorConfig, BatchRelayerJoinPool, BatchSwap, BatchSwapStep, EncodeBatchSwapInput, EncodeBooMirrorWorldEnterInput, EncodeBooMirrorWorldLeaveInput, EncodeExitPoolInput, EncodeFBeetsBarEnterInput, EncodeFBeetsBarLeaveInput, EncodeJoinPoolInput, EncodeMasterChefDepositInput, EncodeMasterChefWithdrawInput, EncodeUnwrapAaveStaticTokenInput, EncodeUnwrapYearnVaultTokenInput, ExitAndBatchSwapExitItemInput, ExitAndBatchSwapInput, ExitPoolData, ExitPoolRequest, ExitStablePhantomInput, FetchPoolsInput, FundManagement, JoinPoolRequest, ManagedPoolEncoder, NestedLinearPool, Network, OutputReference, PoolBalanceOp, PoolBalanceOpKind, PoolReference, PoolSpecialization, QueryWithSorInput, QueryWithSorOutput, Relayer, RelayerAction, RelayerAuthorization, SingleSwap, Sor, StablePhantomPoolJoinKind, StablePoolEncoder, StablePoolExitKind, StablePoolJoinKind, Subgraph, Swap, SwapType, Swaps, TransactionData, UserBalanceOp, UserBalanceOpKind, WeightedPoolEncoder, WeightedPoolExitKind, WeightedPoolJoinKind, accountToAddress, getLimitsForSlippage, getPoolAddress, getPoolNonce, getPoolSpecialization, isNormalizedWeights, isSameAddress, signPermit, splitPoolId, toNormalizedWeights };
+export { AaveHelpers, Account, AssetHelpers, BalancerErrors, BalancerLinearPoolType, BalancerNetworkConfig, BalancerSDK, BalancerSdkConfig, BalancerSdkSorConfig, BatchRelayerJoinPool, BatchSwap, BatchSwapStep, EncodeBatchSwapInput, EncodeBooMirrorWorldEnterInput, EncodeBooMirrorWorldLeaveInput, EncodeExitPoolInput, EncodeJoinPoolInput, EncodeMasterChefDepositInput, EncodeMasterChefWithdrawInput, EncodeUnwrapAaveStaticTokenInput, EncodeUnwrapYearnVaultTokenInput, EncodeXSonarBarEnterInput, EncodeXSonarBarLeaveInput, ExitAndBatchSwapExitItemInput, ExitAndBatchSwapInput, ExitPoolData, ExitPoolRequest, ExitStablePhantomInput, FetchPoolsInput, FundManagement, JoinPoolRequest, ManagedPoolEncoder, NestedLinearPool, Network, OutputReference, PoolBalanceOp, PoolBalanceOpKind, PoolReference, PoolSpecialization, QueryWithSorInput, QueryWithSorOutput, Relayer, RelayerAction, RelayerAuthorization, SingleSwap, Sor, StablePhantomPoolJoinKind, StablePoolEncoder, StablePoolExitKind, StablePoolJoinKind, Subgraph, Swap, SwapType, Swaps, TransactionData, UserBalanceOp, UserBalanceOpKind, WeightedPoolEncoder, WeightedPoolExitKind, WeightedPoolJoinKind, accountToAddress, getLimitsForSlippage, getPoolAddress, getPoolNonce, getPoolSpecialization, isNormalizedWeights, isSameAddress, signPermit, splitPoolId, toNormalizedWeights };
